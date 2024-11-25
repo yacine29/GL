@@ -69,7 +69,9 @@ public class Activity_Groups extends AppCompatActivity {
                 }
                 //Do Somtihng About Split Groups
             }
-
+            SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
+            Data data =new Data("yacine",15);
+            systemSaveLoad.save_Data(data);
             workbook.close();
             fileInputStream.close();
         } catch (Exception e) {
@@ -146,13 +148,19 @@ public class Activity_Groups extends AppCompatActivity {
                 }
             }
         });
+        SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
+        if (systemSaveLoad.load_Data()!=null){
+            Toast.makeText(getBaseContext(),"Exist",Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getBaseContext(),"Not_Exist",Toast.LENGTH_SHORT).show();
+        }
         }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                readExcelFile("/sdcard/example.xlsx"); // Adjust the path to your file
+
             } else {
                 Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
             }
