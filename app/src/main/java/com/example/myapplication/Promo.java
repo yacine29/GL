@@ -1,9 +1,7 @@
-package com.example.new_proj;
+package com.example.myapplication;
 
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Promo {
     private String nom;
