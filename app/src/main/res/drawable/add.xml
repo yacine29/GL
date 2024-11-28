@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="15dp"/>
+            <solid android:color="#304FFE"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/baseline_add_24" android:width="20dp" android:height="20dp"></item>
+</layer-list>
