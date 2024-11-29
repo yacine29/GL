@@ -7,11 +7,13 @@ public class Etudiant {
     private int num;
     private String nom;
     private String prenom;
+    private Note note;
 
     public Etudiant(int num, String nom, String prenom) {
         this.num = num;
         this.nom = nom;
         this.prenom = prenom;
+        this.note = new Note();
     }
 
     // Getters et setters
@@ -37,6 +39,10 @@ public class Etudiant {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public Note getNote() {
+        return note;
     }
 }
 
