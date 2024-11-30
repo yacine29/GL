@@ -71,8 +71,8 @@ public class Activity_Groups extends AppCompatActivity {
                 //Do Somtihng About Split Groups
             }
             SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
-            Data data =new Data("yacine",15);
-            systemSaveLoad.save_Data(data);
+            //#1
+            //#2
             workbook.close();
             fileInputStream.close();
         } catch (Exception e) {
@@ -141,12 +141,7 @@ public class Activity_Groups extends AppCompatActivity {
                 }
             }
         });
-        SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
-        if (systemSaveLoad.load_Data()!=null){
-            Toast.makeText(getBaseContext(),"Exist",Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(getBaseContext(),"Not_Exist",Toast.LENGTH_SHORT).show();
-        }
+
         }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

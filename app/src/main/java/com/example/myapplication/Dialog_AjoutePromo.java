@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ public class Dialog_AjoutePromo extends DialogFragment {
     TextInputEditText inp_Name_Promo;
     Button btn_Cancel_Promo, btn_Add_Promo;
     private View view;
-
 
 
 
@@ -43,4 +43,9 @@ public class Dialog_AjoutePromo extends DialogFragment {
         });
         return view;
     };
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        super.show(manager, tag);
+    }
 }

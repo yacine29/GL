@@ -19,14 +19,9 @@
         <activity
             android:name=".Activity_Promo"
             android:exported="false" />
+
         <activity
             android:name=".Activity_Cover"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_Presentation"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_Groups"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activity_Presentation"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_Groups"
+            android:exported="false" />
+
     </application>
 
 </manifest>
