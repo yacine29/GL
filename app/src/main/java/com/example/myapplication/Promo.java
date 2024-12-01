@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class Promo {
     private String nom;
-    private String date;
+    private int year;
     private ArrayList<Groupe> groupes;
     private String couleur;
 
     // Constructeur
-    public Promo(String nom, String date, String couleur) {
+    public Promo(String nom, int year, String couleur) {
         this.nom = nom;
-        this.date = date;
+        this.year = year;
         this.couleur = couleur;
         this.groupes = new ArrayList<>();
     }
@@ -26,12 +26,12 @@ public class Promo {
         this.nom = nom;
     }
 
-    public String getDate() {
-        return date;
+    public int getYear() {
+        return year;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public ArrayList<Groupe> getGroupes() {
