@@ -8,14 +8,14 @@ import java.util.List;
 public class Groupe {
 
     private int num;
-    private ArrayList<Etudiant> etudiants;
-    private ArrayList<Seance> seances;
+    private ArrayList<Student> students;
+    private ArrayList<Session> sessions;
 
 
     public Groupe(int num) {
         this.num = num;
-        this.etudiants = new ArrayList<>();
-        this.seances = new ArrayList<>();
+        this.students = new ArrayList<>();
+        this.sessions = new ArrayList<>();
     }
 
     // Getters et setters
@@ -27,20 +27,20 @@ public class Groupe {
         this.num = num;
     }
 
-    public List<Etudiant> getEtudiants() {
-        return etudiants;
+    public List<Student> getEtudiants() {
+        return students;
     }
 
-    public void addEtudiant(Etudiant etudiant) {
-        this.etudiants.add(etudiant);
+    public void addEtudiant(Student student) {
+        this.students.add(student);
     }
 
-    public List<Seance> getSeances() {
-        return seances;
+    public List<Session> getSeances() {
+        return sessions;
     }
 
-    public void addSeance(Seance  seance) {
-        this.seances.add(seance);
+    public void addSeance(Session session) {
+        this.sessions.add(session);
 
     }
 }

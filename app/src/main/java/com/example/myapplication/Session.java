@@ -1,13 +1,15 @@
 package com.example.myapplication;
 
 
+import java.sql.Time;
 import java.util.Date;
 
-public class Seance {
+public class Session {
     private int num;
     private Date date;
+    private Time time;
 
-    public Seance(int num, Date date) {
+    public Session(int num, Date date) {
         this.num = num;
         this.date = date;
     }
@@ -29,4 +31,11 @@ public class Seance {
         this.date = date;
     }
 
+    public Time getTime() {
+        return time;
     }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+}

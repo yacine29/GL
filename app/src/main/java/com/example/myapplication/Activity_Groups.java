@@ -38,9 +38,10 @@ public class Activity_Groups extends AppCompatActivity {
     private static ArrayList<String>secondaryName=new ArrayList<>();
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final int PICK_FILE_REQUEST_CODE = 2;
+    private static int index;
+    private Promo promo;
     private void readExcelFile(String filePath) {
         try {
-
             File file = new File(filePath);
             if (!file.exists()) {
                 Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
@@ -130,6 +131,9 @@ public class Activity_Groups extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+        index=getIntent().getIntExtra("IndexPromo",0);
+        promo = DataHolder.getInstance().getMyData().getPromos().get(index);
+        Toast.makeText(this, "IN ActivityGroup "+promo.getNom(), Toast.LENGTH_SHORT).show();
         btn_ImportExcel_Group = findViewById(R.id.btn_ImportExcel_Group);
         btn_ImportExcel_Group.setOnClickListener(new View.OnClickListener() {
             @Override

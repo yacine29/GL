@@ -17,12 +17,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.time.Year;
 import java.util.Random;
 
-public class Dialog_AjoutePromo extends DialogFragment {
+public class Dialog_AddPromo extends DialogFragment {
     private TextInputEditText inp_Name_Promo;
     private Button btn_Cancel_Promo, btn_Add_Promo;
     private View view;
     private Context context;
-    private Data data ;
     private Dialog_AddPromoListener listener;
     private static String getRandomColorCode() {
         Random random = new Random();
@@ -46,7 +45,6 @@ public class Dialog_AjoutePromo extends DialogFragment {
         inp_Name_Promo=view.findViewById(R.id.inp_Nom_Promo);
         btn_Cancel_Promo =view.findViewById(R.id.btn_Cancel_Promo);
         btn_Add_Promo =view.findViewById(R.id.btn_Add_Promo);
-        data=DataHolder.getInstance().getMyData();
         btn_Cancel_Promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,8 +56,8 @@ public class Dialog_AjoutePromo extends DialogFragment {
             public void onClick(View v) {
                 if (!inp_Name_Promo.getText().toString().isEmpty()&&inp_Name_Promo.getText().toString().length()>1){
                     int currentYear = Year.now().getValue();
-                    data.addPromo(new Promo(inp_Name_Promo.getText().toString(),currentYear,getRandomColorCode()));
-                    listener.onDataReceived_AddPromo(data);
+                    Promo promo=new Promo(inp_Name_Promo.getText().toString(),currentYear,getRandomColorCode());
+                    listener.onDataReceived_AddPromo(promo);
                     dismiss();
                 }
             }
@@ -67,7 +65,7 @@ public class Dialog_AjoutePromo extends DialogFragment {
         return view;
     };
     public interface Dialog_AddPromoListener {
-        void onDataReceived_AddPromo(Data data);
+        void onDataReceived_AddPromo(Promo promo);
     }
 
 }

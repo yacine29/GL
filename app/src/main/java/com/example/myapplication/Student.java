@@ -1,19 +1,15 @@
 package com.example.myapplication;
 
 
-import java.util.ArrayList;
-
-public class Etudiant {
+public class Student {
     private int num;
     private String nom;
     private String prenom;
-    private Note note;
 
-    public Etudiant(int num, String nom, String prenom) {
+    public Student(int num, String nom, String prenom) {
         this.num = num;
         this.nom = nom;
         this.prenom = prenom;
-        this.note = new Note();
     }
 
     // Getters et setters
@@ -41,8 +37,6 @@ public class Etudiant {
         this.prenom = prenom;
     }
 
-    public Note getNote() {
-        return note;
-    }
+
 }
 
