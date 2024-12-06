@@ -27,11 +27,11 @@ public class Groupe {
         this.num = num;
     }
 
-    public List<Student> getEtudiants() {
+    public ArrayList<Student> getStudents() {
         return students;
     }
 
-    public void addEtudiant(Student student) {
+    public void addStudent(Student student) {
         this.students.add(student);
     }
 
@@ -43,4 +43,5 @@ public class Groupe {
         this.sessions.add(session);
 
     }
+
 }

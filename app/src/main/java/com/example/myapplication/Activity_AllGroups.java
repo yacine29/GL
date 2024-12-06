@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -13,6 +14,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -37,7 +39,10 @@ public class Activity_AllGroups extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST_CODE = 2;
     private static int index;
     private Promo promo;
-    private void readExcelFile(String filePath) {
+
+    private void readExcelFile(String filePath , Promo promo) {
+        Groupe groupe = null;
+        Student student;
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -46,6 +51,7 @@ public class Activity_AllGroups extends AppCompatActivity {
             }
             FileInputStream fileInputStream = new FileInputStream(file);
             Workbook workbook = new XSSFWorkbook(fileInputStream);
+            int p=0;
             for (int i=0;i<=workbook.getNumberOfSheets()-1;i++){
                 Sheet sheet = workbook.getSheetAt(i);
                 for (Row row : sheet) {
@@ -54,16 +60,34 @@ public class Activity_AllGroups extends AppCompatActivity {
                             case STRING:
                                 if (cell.getStringCellValue().length()==8&&"GROUPE".equals(cell.getStringCellValue().substring(0,6).toString())){
                                     //groups.add(Integer.parseInt(cell.getStringCellValue().substring(7,8)));//Change With Data Class Group
+                                    groupe = new Groupe(Integer.parseInt(cell.getStringCellValue().substring(7,8)));
+                                    p=0;
+
+                                   promo.addGroupe(groupe);
+
                                 }
                                 if (row.getRowNum()>=7){
+                                    p++;
+                                    student = new Student(p);
                                     if (cell.getColumnIndex()==1){
+                                        student.setName(cell.getStringCellValue());
                                         //names.add(cell.getStringCellValue());//Change With Data Class Group
+
                                     }else if (cell.getColumnIndex()==2){
+                                        student.setSurname(cell.getStringCellValue());
+                                        groupe.addStudent(student);
                                         //secondaryName.add(cell.getStringCellValue());//Change With Data Class Group
                                     }
                                 }
                                 break;
                         }
+                    }
+                }
+                for (int s=0 ; s<promo.getGroupes().toArray().length-1;s++ ){
+                    Log.d("testXXX", promo.getGroupes().get(s).getNum()+"");
+                    for (int a=0;a<promo.getGroupes().get(s).getStudents().toArray().length-1;a++){
+                        Log.d("testXXX","name: "+ promo.getGroupes().get(s).getStudents().get(a).getName());
+                        Log.d("testXXX","Surname: "+ promo.getGroupes().get(s).getStudents().get(a).getSurname());
                     }
                 }
                 //Do Somtihng About Split Groups
@@ -161,7 +185,7 @@ public class Activity_AllGroups extends AppCompatActivity {
             Uri uri = data.getData();
             if (uri != null) {
                 String filePath = getFilePathFromUri(uri);
-                readExcelFile(filePath);
+                readExcelFile(filePath , promo);
             }
         }
     }

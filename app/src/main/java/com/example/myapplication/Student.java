@@ -6,10 +6,9 @@ public class Student {
     private String name;
     private String surname;
 
-    public Student(int num, String name, String surname) {
+    public Student(int num) {
         this.num = num;
-        this.name = name;
-        this.surname = surname;
+
     }
 
     // Getters et setters
