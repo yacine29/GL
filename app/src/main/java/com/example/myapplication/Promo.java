@@ -7,13 +7,11 @@ public class Promo {
     private String nom;
     private int year;
     private ArrayList<Groupe> groupes;
-    private String couleur;
 
     // Constructeur
-    public Promo(String nom, int year, String couleur) {
+    public Promo(String nom, int year) {
         this.nom = nom;
         this.year = year;
-        this.couleur = couleur;
         this.groupes = new ArrayList<>();
     }
 
@@ -40,14 +38,6 @@ public class Promo {
 
     public void addGroupe(Groupe groupe) {
         this.groupes.add(groupe);
-    }
-
-    public String getCouleur() {
-        return couleur;
-    }
-
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
     }
 }
 

@@ -5,17 +5,8 @@
     android:id="@+id/layoutx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:clickable="false">
-
-    <ImageView
-        android:id="@+id/btn_DeleteGroup_ActivityGroups"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sub" />
 
     <Button
         android:id="@+id/btn_ImportExcel_Group"
@@ -42,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_ImportExcel_Group">
 
         <LinearLayout
-            android:id="@+id/vb_ContentGroups_ActivityGroups"
+            android:id="@+id/vb_ContentGroups_ActivityAllGroups"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

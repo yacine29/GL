@@ -1,11 +1,32 @@
 package com.example.myapplication;
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 public class DataHolder {
     private static final DataHolder instance = new DataHolder();
     private Data myData;
     private Promo targetPromo;
     private Groupe targetGroup;
     private Student targetStudent;
+    private LinearLayout targetContentLayout;
+    private View targetContent;
+
+    public View getTargetContent() {
+        return targetContent;
+    }
+
+    public void setTargetContent(View targetContent) {
+        this.targetContent = targetContent;
+    }
+
+    public LinearLayout getTargetContentLayout() {
+        return targetContentLayout;
+    }
+
+    public void setTargetContentLayout(LinearLayout targetContentLayout) {
+        this.targetContentLayout = targetContentLayout;
+    }
 
     public Promo getTargetPromo() {
         return targetPromo;

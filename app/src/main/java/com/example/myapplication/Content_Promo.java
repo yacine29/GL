@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ public class Content_Promo {
     private CardView pnl_Content_ContentPromo;
     private TextView inp_Year_ContentPromo, inp_Name_ContentPromo;
     private Promo promo ;
+    private int indexContent;
 
     public Promo getPromo() {
         return promo;
@@ -36,22 +36,31 @@ public class Content_Promo {
         this.inp_Year_ContentPromo = content.findViewById(R.id.inp_Year_ContentPromo);
         this.promo=promo;
         this.inp_Name_ContentPromo.setText(promo.getNom());
-        this.inp_Year_ContentPromo.setText(String.valueOf(promo.getYear()));
+        this.inp_Year_ContentPromo.setText(String.valueOf(promo.getYear())+" - "+String.valueOf(promo.getYear()+1));
         pnl_Content_ContentPromo.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context, "Long Click"+promo.getNom(), Toast.LENGTH_SHORT).show();
+                eventContentListener.onDeleting(getPromo(),getContent(),indexContent);
                 return false;
             }
         });
         pnl_Content_ContentPromo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventContentListener.SendActivity();
+                eventContentListener.sendActivity();
             }
         });
     }
     public interface EventContentListener{
-        public void SendActivity();
+        public void sendActivity();
+        public void onDeleting(Promo promo,View view,int indexContent);
+    }
+
+    public void setIndexContent(int indexContent) {
+        this.indexContent = indexContent;
+    }
+
+    public int getIndexContent() {
+        return indexContent;
     }
 }

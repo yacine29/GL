@@ -3,13 +3,13 @@ package com.example.myapplication;
 
 public class Student {
     private int num;
-    private String nom;
-    private String prenom;
+    private String name;
+    private String surname;
 
-    public Student(int num, String nom, String prenom) {
+    public Student(int num, String name, String surname) {
         this.num = num;
-        this.nom = nom;
-        this.prenom = prenom;
+        this.name = name;
+        this.surname = surname;
     }
 
     // Getters et setters
@@ -21,20 +21,20 @@ public class Student {
         this.num = num;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPrenom() {
-        return prenom;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
 

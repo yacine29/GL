@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,14 +29,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
-public class Activity_Groups extends AppCompatActivity {
-    Button btn_ImportExcel_Group;
-    //Intent Get Data Groups If Exsist
-    private static ArrayList<Integer>groups=new ArrayList<>();
-    private static ArrayList<String>names=new ArrayList<>();
-    private static ArrayList<String>secondaryName=new ArrayList<>();
+public class Activity_AllGroups extends AppCompatActivity {
+    private Button btn_ImportExcel_Group;
+    private LinearLayout vb_ContentGroups_ActivityAllGroups;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final int PICK_FILE_REQUEST_CODE = 2;
     private static int index;
@@ -56,13 +53,13 @@ public class Activity_Groups extends AppCompatActivity {
                         switch (cell.getCellType()) {
                             case STRING:
                                 if (cell.getStringCellValue().length()==8&&"GROUPE".equals(cell.getStringCellValue().substring(0,6).toString())){
-                                    groups.add(Integer.parseInt(cell.getStringCellValue().substring(7,8)));//Change With Data Class Group
+                                    //groups.add(Integer.parseInt(cell.getStringCellValue().substring(7,8)));//Change With Data Class Group
                                 }
                                 if (row.getRowNum()>=7){
                                     if (cell.getColumnIndex()==1){
-                                        names.add(cell.getStringCellValue());//Change With Data Class Group
+                                        //names.add(cell.getStringCellValue());//Change With Data Class Group
                                     }else if (cell.getColumnIndex()==2){
-                                        secondaryName.add(cell.getStringCellValue());//Change With Data Class Group
+                                        //secondaryName.add(cell.getStringCellValue());//Change With Data Class Group
                                     }
                                 }
                                 break;
@@ -72,8 +69,7 @@ public class Activity_Groups extends AppCompatActivity {
                 //Do Somtihng About Split Groups
             }
             SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
-            //#1
-            //#2
+            //Save Data in DataHolder and Data Cache
             workbook.close();
             fileInputStream.close();
         } catch (Exception e) {
@@ -130,16 +126,16 @@ public class Activity_Groups extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_groups);
-        index=getIntent().getIntExtra("IndexPromo",0);
-        promo = DataHolder.getInstance().getMyData().getPromos().get(index);
-        Toast.makeText(this, "IN ActivityGroup "+promo.getNom(), Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_all_groups);
+        {index=getIntent().getIntExtra("IndexPromo",0);
+        promo = DataHolder.getInstance().getMyData().getPromos().get(index);}//Get Data From Activity Promo And DataHolder
         btn_ImportExcel_Group = findViewById(R.id.btn_ImportExcel_Group);
+        vb_ContentGroups_ActivityAllGroups = findViewById(R.id.vb_ContentGroups_ActivityAllGroups);
         btn_ImportExcel_Group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Activity_Groups.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(Activity_AllGroups.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 }else {
                     openFilePicker();
                 }
@@ -152,7 +148,6 @@ public class Activity_Groups extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
             } else {
                 Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
             }

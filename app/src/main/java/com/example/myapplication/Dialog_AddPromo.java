@@ -43,8 +43,8 @@ public class Dialog_AddPromo extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_add_promo,container,false);
         inp_Name_Promo=view.findViewById(R.id.inp_Nom_Promo);
-        btn_Cancel_Promo =view.findViewById(R.id.btn_Cancel_Promo);
-        btn_Add_Promo =view.findViewById(R.id.btn_Add_Promo);
+        btn_Cancel_Promo =view.findViewById(R.id.btn_Cancel_Warning);
+        btn_Add_Promo =view.findViewById(R.id.btn_Delete_Warning);
         btn_Cancel_Promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class Dialog_AddPromo extends DialogFragment {
             public void onClick(View v) {
                 if (!inp_Name_Promo.getText().toString().isEmpty()&&inp_Name_Promo.getText().toString().length()>1){
                     int currentYear = Year.now().getValue();
-                    Promo promo=new Promo(inp_Name_Promo.getText().toString(),currentYear,getRandomColorCode());
+                    Promo promo=new Promo(inp_Name_Promo.getText().toString(),currentYear);
                     listener.onDataReceived_AddPromo(promo);
                     dismiss();
                 }

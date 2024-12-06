@@ -7,11 +7,13 @@ import java.util.Date;
 public class Session {
     private int num;
     private Date date;
-    private Time time;
+    private Time timeStart ,timeEnd;
 
-    public Session(int num, Date date) {
+    public Session(int num, Date date , Time timeStart , Time timeEnd) {
         this.num = num;
         this.date = date;
+        this.timeStart=timeStart;
+        this.timeEnd=timeEnd;
     }
 
     // Getters et setters
@@ -31,11 +33,19 @@ public class Session {
         this.date = date;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getTimeStart() {
+        return timeStart;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setTimeStart(Time timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public Time getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(Time timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }
