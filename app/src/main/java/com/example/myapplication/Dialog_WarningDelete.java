@@ -50,9 +50,15 @@ public class Dialog_WarningDelete extends DialogFragment {
                     DataHolder.getInstance().getMyData().getPromos().remove(DataHolder.getInstance().getTargetPromo());
                     SystemSaveLoad systemSaveLoad = new SystemSaveLoad(context);
                     systemSaveLoad.save_Data(DataHolder.getInstance().getMyData());
+                } else if (context.getClass().equals(Activity_AllGroups.class)) {
+                    out_NameContent_Warning.setText("Delete Group");
+                    DataHolder.getInstance().getTargetContentLayout().removeView(DataHolder.getInstance().getTargetContent());
+                    DataHolder.getInstance().getTargetPromo().getGroupes().remove(DataHolder.getInstance().getTargetGroup());
+                    SystemSaveLoad systemSaveLoad = new SystemSaveLoad(context);
+                    systemSaveLoad.save_Data(DataHolder.getInstance().getMyData());
                 }
 
-                    dismiss();
+                dismiss();
             }
         });
         return view;

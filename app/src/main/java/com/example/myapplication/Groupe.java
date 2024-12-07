@@ -35,11 +35,11 @@ public class Groupe {
         this.students.add(student);
     }
 
-    public List<Session> getSeances() {
+    public List<Session> getSession() {
         return sessions;
     }
 
-    public void addSeance(Session session) {
+    public void addSession(Session session) {
         this.sessions.add(session);
 
     }

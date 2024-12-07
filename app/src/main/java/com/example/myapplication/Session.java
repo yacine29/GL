@@ -5,9 +5,11 @@ import java.sql.Time;
 import java.util.Date;
 
 public class Session {
+    enum TypeSession {TD,TP}
     private int num;
     private Date date;
     private Time timeStart ,timeEnd;
+    private TypeSession type;
 
     public Session(int num, Date date , Time timeStart , Time timeEnd) {
         this.num = num;

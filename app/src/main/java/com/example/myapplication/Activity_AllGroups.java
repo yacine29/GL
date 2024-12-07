@@ -3,7 +3,6 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Group;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -37,12 +36,14 @@ public class Activity_AllGroups extends AppCompatActivity {
     private LinearLayout vb_ContentGroups_ActivityAllGroups;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final int PICK_FILE_REQUEST_CODE = 2;
-    private static int index;
+    private static int indexPromo;
+    private Dialog_WarningDelete warningDelete;
     private Promo promo;
 
     private void readExcelFile(String filePath , Promo promo) {
         Groupe groupe = null;
-        Student student;
+        Student student = null;
+        boolean isGroup=false;
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -53,47 +54,60 @@ public class Activity_AllGroups extends AppCompatActivity {
             Workbook workbook = new XSSFWorkbook(fileInputStream);
             int p=0;
             for (int i=0;i<=workbook.getNumberOfSheets()-1;i++){
+                isGroup=false;
                 Sheet sheet = workbook.getSheetAt(i);
                 for (Row row : sheet) {
                     for (Cell cell : row) {
                         switch (cell.getCellType()) {
                             case STRING:
                                 if (cell.getStringCellValue().length()==8&&"GROUPE".equals(cell.getStringCellValue().substring(0,6).toString())){
-                                    //groups.add(Integer.parseInt(cell.getStringCellValue().substring(7,8)));//Change With Data Class Group
                                     groupe = new Groupe(Integer.parseInt(cell.getStringCellValue().substring(7,8)));
                                     p=0;
-
+                                    isGroup=true;
                                    promo.addGroupe(groupe);
-
                                 }
                                 if (row.getRowNum()>=7){
-                                    p++;
-                                    student = new Student(p);
                                     if (cell.getColumnIndex()==1){
+                                        p++;
+                                        student = new Student(p);
                                         student.setName(cell.getStringCellValue());
-                                        //names.add(cell.getStringCellValue());//Change With Data Class Group
 
                                     }else if (cell.getColumnIndex()==2){
-                                        student.setSurname(cell.getStringCellValue());
+                                        student.setSurName(cell.getStringCellValue());
                                         groupe.addStudent(student);
-                                        //secondaryName.add(cell.getStringCellValue());//Change With Data Class Group
                                     }
                                 }
                                 break;
                         }
                     }
                 }
-                for (int s=0 ; s<promo.getGroupes().toArray().length-1;s++ ){
-                    Log.d("testXXX", promo.getGroupes().get(s).getNum()+"");
-                    for (int a=0;a<promo.getGroupes().get(s).getStudents().toArray().length-1;a++){
-                        Log.d("testXXX","name: "+ promo.getGroupes().get(s).getStudents().get(a).getName());
-                        Log.d("testXXX","Surname: "+ promo.getGroupes().get(s).getStudents().get(a).getSurname());
-                    }
+                if (isGroup){
+                    SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
+                    DataHolder.getInstance().getMyData().getPromos().set(indexPromo,promo);
+                    systemSaveLoad.save_Data(DataHolder.getInstance().getMyData());
+                    Content_Group content_group = new Content_Group(getBaseContext(), groupe, new Content_Group.EventContentListener() {
+                        @Override
+                        public void sendActivity() {
+                            int indexGroup = DataHolder.getInstance().getMyData().getPromos().get(indexPromo).getGroupes().toArray().length-1;
+                            Intent intent = new Intent(getBaseContext(), Activity_Group.class);
+                            intent.putExtra("IndexGroup", indexGroup);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onDeleting(Groupe groupe, View content, int indexContent) {
+                            warningDelete = new Dialog_WarningDelete();
+                            warningDelete.setCancelable(false);
+                            warningDelete.show(Activity_AllGroups.this.getFragmentManager(),"Delete a Group");
+                            DataHolder.getInstance().setTargetContentLayout(vb_ContentGroups_ActivityAllGroups);
+                            DataHolder.getInstance().setTargetContent(content);
+                            DataHolder.getInstance().setTargetPromo(promo);
+                            DataHolder.getInstance().setTargetGroup(groupe);
+                        }
+                    });
+                    vb_ContentGroups_ActivityAllGroups.addView(content_group.getContent());
                 }
-                //Do Somtihng About Split Groups
             }
-            SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
-            //Save Data in DataHolder and Data Cache
             workbook.close();
             fileInputStream.close();
         } catch (Exception e) {
@@ -151,10 +165,36 @@ public class Activity_AllGroups extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_groups);
-        {index=getIntent().getIntExtra("IndexPromo",0);
-        promo = DataHolder.getInstance().getMyData().getPromos().get(index);}//Get Data From Activity Promo And DataHolder
+        {
+            indexPromo =getIntent().getIntExtra("IndexPromo",0);
+        promo = DataHolder.getInstance().getMyData().getPromos().get(indexPromo);}//Get Data From Activity Promo And DataHolder
         btn_ImportExcel_Group = findViewById(R.id.btn_ImportExcel_Group);
         vb_ContentGroups_ActivityAllGroups = findViewById(R.id.vb_ContentGroups_ActivityAllGroups);
+        for (int i = 0 ; i<promo.getGroupes().toArray().length;i++) {
+            int finalI = i;
+            Content_Group content_group = new Content_Group(getBaseContext(), promo.getGroupes().get(i), new Content_Group.EventContentListener() {
+                @Override
+                public void sendActivity() {
+                    int indexGroup = finalI;
+                    Intent intent = new Intent(getBaseContext(), Activity_Group.class);
+                    intent.putExtra("IndexGroup", indexGroup);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onDeleting(Groupe groupe, View content, int indexContent) {
+                    warningDelete = new Dialog_WarningDelete();
+                    warningDelete.setCancelable(false);
+                    warningDelete.show(Activity_AllGroups.this.getFragmentManager(),"Delete a Group");
+                    DataHolder.getInstance().setTargetContentLayout(vb_ContentGroups_ActivityAllGroups);
+                    DataHolder.getInstance().setTargetContent(content);
+                    DataHolder.getInstance().setTargetPromo(promo);
+                    DataHolder.getInstance().setTargetGroup(groupe);
+                }
+            });
+            vb_ContentGroups_ActivityAllGroups.addView(content_group.getContent());
+
+        }
         btn_ImportExcel_Group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +229,7 @@ public class Activity_AllGroups extends AppCompatActivity {
             }
         }
     }
+
 }
 
 

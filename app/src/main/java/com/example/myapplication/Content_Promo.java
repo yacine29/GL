@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 
@@ -13,7 +12,7 @@ public class Content_Promo {
     private Context context;
     private final int CONTENT_ID = R.layout.content_promo;
     private CardView pnl_Content_ContentPromo;
-    private TextView inp_Year_ContentPromo, inp_Name_ContentPromo;
+    private TextView out_Year_ContentPromo, out_Name_ContentPromo;
     private Promo promo ;
     private int indexContent;
 
@@ -32,11 +31,11 @@ public class Content_Promo {
         this.context = context;
         this.eventContentListener = eventContentListener;
         this.pnl_Content_ContentPromo = content.findViewById(R.id.pnl_Content_ContentPromo);
-        this.inp_Name_ContentPromo = content.findViewById(R.id.inp_Name_ContentPromo);
-        this.inp_Year_ContentPromo = content.findViewById(R.id.inp_Year_ContentPromo);
+        this.out_Name_ContentPromo = content.findViewById(R.id.out_Name_ContentPromo);
+        this.out_Year_ContentPromo = content.findViewById(R.id.out_Year_ContentPromo);
         this.promo=promo;
-        this.inp_Name_ContentPromo.setText(promo.getNom());
-        this.inp_Year_ContentPromo.setText(String.valueOf(promo.getYear())+" - "+String.valueOf(promo.getYear()+1));
+        this.out_Name_ContentPromo.setText(promo.getNom());
+        this.out_Year_ContentPromo.setText(String.valueOf(promo.getYear())+" - "+String.valueOf(promo.getYear()+1));
         pnl_Content_ContentPromo.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

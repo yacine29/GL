@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    layout_height=""
-    layout_width=""
+    layout_height="wrap_content"
+    layout_width="wrap_content"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -43,7 +43,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/inp_Year_ContentPromo"
+                    android:id="@+id/out_Year_ContentPromo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -62,7 +62,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/inp_Name_ContentPromo"
+                android:id="@+id/out_Name_ContentPromo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="serif"

@@ -4,7 +4,7 @@ package com.example.myapplication;
 public class Student {
     private int num;
     private String name;
-    private String surname;
+    private String surName;
 
     public Student(int num) {
         this.num = num;
@@ -28,12 +28,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getSurName() {
+        return surName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
 
