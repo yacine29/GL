@@ -2,20 +2,19 @@ package com.example.myapplication;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class Groupe {
+public class Group {
 
     private int num;
     private ArrayList<Student> students;
     private ArrayList<Session> sessions;
-
-
-    public Groupe(int num) {
+    private int indexType;
+    public Group(int num) {
         this.num = num;
         this.students = new ArrayList<>();
         this.sessions = new ArrayList<>();
+
     }
 
     // Getters et setters
@@ -35,13 +34,20 @@ public class Groupe {
         this.students.add(student);
     }
 
-    public List<Session> getSession() {
-        return sessions;
-    }
-
     public void addSession(Session session) {
         this.sessions.add(session);
 
     }
 
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public int getIndexType() {
+        return indexType;
+    }
+
+    public void setIndexType(int indexType) {
+        this.indexType = indexType;
+    }
 }

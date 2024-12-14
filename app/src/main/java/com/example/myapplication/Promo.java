@@ -4,24 +4,28 @@ package com.example.myapplication;
 import java.util.ArrayList;
 
 public class Promo {
-    private String nom;
+    private String nameClass;
+    private String speciality;
+    String Level;
     private int year;
-    private ArrayList<Groupe> groupes;
+    private ArrayList<Group> groups;
 
-    // Constructeur
-    public Promo(String nom, int year) {
-        this.nom = nom;
+
+    public Promo(String nameClass, String speciality, String level, int year) {
+        this.nameClass = nameClass;
+        this.speciality = speciality;
+        Level = level;
         this.year = year;
-        this.groupes = new ArrayList<>();
+        groups =new ArrayList<>();
     }
 
     // Getters et setters
-    public String getNom() {
-        return nom;
+    public String getNameClass() {
+        return nameClass;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNameClass(String nameClass) {
+        this.nameClass = nameClass;
     }
 
     public int getYear() {
@@ -32,12 +36,28 @@ public class Promo {
         this.year = year;
     }
 
-    public ArrayList<Groupe> getGroupes() {
-        return groupes;
+    public ArrayList<Group> getGroupes() {
+        return groups;
     }
 
-    public void addGroupe(Groupe groupe) {
-        this.groupes.add(groupe);
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getLevel() {
+        return Level;
+    }
+
+    public void setLevel(String level) {
+        Level = level;
+    }
+
+    public void addGroupe(Group group) {
+        this.groups.add(group);
     }
 }
 

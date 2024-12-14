@@ -13,7 +13,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,8 +29,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
-public class Activity_AllGroups extends AppCompatActivity {
+public class Activity_AllGroups extends AppCompatActivity implements Dialog_AddGroup.Dialog_AddGroupListener {
     private Button btn_ImportExcel_Group;
     private LinearLayout vb_ContentGroups_ActivityAllGroups;
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -41,8 +41,9 @@ public class Activity_AllGroups extends AppCompatActivity {
     private Promo promo;
 
     private void readExcelFile(String filePath , Promo promo) {
-        Groupe groupe = null;
+        Group group = null;
         Student student = null;
+        ArrayList<Group>GroupsNew=new ArrayList<>();
         boolean isGroup=false;
         try {
             File file = new File(filePath);
@@ -61,10 +62,10 @@ public class Activity_AllGroups extends AppCompatActivity {
                         switch (cell.getCellType()) {
                             case STRING:
                                 if (cell.getStringCellValue().length()==8&&"GROUPE".equals(cell.getStringCellValue().substring(0,6).toString())){
-                                    groupe = new Groupe(Integer.parseInt(cell.getStringCellValue().substring(7,8)));
+                                    group = new Group(Integer.parseInt(cell.getStringCellValue().substring(7,8)));
                                     p=0;
                                     isGroup=true;
-                                   promo.addGroupe(groupe);
+                                   //promo.addGroupe(groupe);
                                 }
                                 if (row.getRowNum()>=7){
                                     if (cell.getColumnIndex()==1){
@@ -74,7 +75,7 @@ public class Activity_AllGroups extends AppCompatActivity {
 
                                     }else if (cell.getColumnIndex()==2){
                                         student.setSurName(cell.getStringCellValue());
-                                        groupe.addStudent(student);
+                                        group.addStudent(student);
                                     }
                                 }
                                 break;
@@ -82,32 +83,17 @@ public class Activity_AllGroups extends AppCompatActivity {
                     }
                 }
                 if (isGroup){
-                    SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
-                    DataHolder.getInstance().getMyData().getPromos().set(indexPromo,promo);
-                    systemSaveLoad.save_Data(DataHolder.getInstance().getMyData());
-                    Content_Group content_group = new Content_Group(getBaseContext(), groupe, new Content_Group.EventContentListener() {
-                        @Override
-                        public void sendActivity() {
-                            int indexGroup = DataHolder.getInstance().getMyData().getPromos().get(indexPromo).getGroupes().toArray().length-1;
-                            Intent intent = new Intent(getBaseContext(), Activity_Group.class);
-                            intent.putExtra("IndexGroup", indexGroup);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onDeleting(Groupe groupe, View content, int indexContent) {
-                            warningDelete = new Dialog_WarningDelete();
-                            warningDelete.setCancelable(false);
-                            warningDelete.show(Activity_AllGroups.this.getFragmentManager(),"Delete a Group");
-                            DataHolder.getInstance().setTargetContentLayout(vb_ContentGroups_ActivityAllGroups);
-                            DataHolder.getInstance().setTargetContent(content);
-                            DataHolder.getInstance().setTargetPromo(promo);
-                            DataHolder.getInstance().setTargetGroup(groupe);
-                        }
-                    });
-                    vb_ContentGroups_ActivityAllGroups.addView(content_group.getContent());
+                    GroupsNew.add(group);
                 }
             }
+            DataHolder.getInstance().setTargetContentLayout(vb_ContentGroups_ActivityAllGroups);
+            DataHolder.getInstance().setTargetPromo(promo);
+            DataHolder.getInstance().setNewGroupes(GroupsNew);
+            Dialog_AddGroup dialog_addGroup = new Dialog_AddGroup();
+            dialog_addGroup = new Dialog_AddGroup();
+            dialog_addGroup.setCancelable(false);
+            dialog_addGroup.show(Activity_AllGroups.this.getFragmentManager(),"Add a Group");
+
             workbook.close();
             fileInputStream.close();
         } catch (Exception e) {
@@ -182,7 +168,7 @@ public class Activity_AllGroups extends AppCompatActivity {
                 }
 
                 @Override
-                public void onDeleting(Groupe groupe, View content, int indexContent) {
+                public void onDeleting(Group groupe, View content, int indexContent) {
                     warningDelete = new Dialog_WarningDelete();
                     warningDelete.setCancelable(false);
                     warningDelete.show(Activity_AllGroups.this.getFragmentManager(),"Delete a Group");
@@ -195,6 +181,7 @@ public class Activity_AllGroups extends AppCompatActivity {
             vb_ContentGroups_ActivityAllGroups.addView(content_group.getContent());
 
         }
+
         btn_ImportExcel_Group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,6 +217,42 @@ public class Activity_AllGroups extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void addGroup(Group group) {
+        SystemSaveLoad systemSaveLoad = new SystemSaveLoad(getBaseContext());
+        promo.addGroupe(group);
+        DataHolder.getInstance().getMyData().getPromos().set(indexPromo,promo);
+        systemSaveLoad.save_Data(DataHolder.getInstance().getMyData());
+        Content_Group content_group = new Content_Group(getBaseContext(), group, new Content_Group.EventContentListener() {
+                        @Override
+                        public void sendActivity() {
+                            int indexGroup = DataHolder.getInstance().getMyData().getPromos().get(indexPromo).getGroupes().toArray().length-1;
+                            Intent intent = new Intent(getBaseContext(), Activity_Group.class);
+                            intent.putExtra("IndexGroup", indexGroup);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onDeleting(Group groupe, View content, int indexContent) {
+                            warningDelete = new Dialog_WarningDelete();
+                            warningDelete.setCancelable(false);
+                            warningDelete.show(Activity_AllGroups.this.getFragmentManager(),"Delete a Group");
+                            DataHolder.getInstance().setTargetContentLayout(vb_ContentGroups_ActivityAllGroups);
+                            DataHolder.getInstance().setTargetContent(content);
+                            DataHolder.getInstance().setTargetPromo(promo);
+                            DataHolder.getInstance().setTargetGroup(groupe);
+                        }
+                    });
+        vb_ContentGroups_ActivityAllGroups.addView(content_group.getContent());
+        if (DataHolder.getInstance().getNewGroupes().toArray().length!=0){
+            Dialog_AddGroup dialog_addGroup = new Dialog_AddGroup();
+            dialog_addGroup = new Dialog_AddGroup();
+            dialog_addGroup.setCancelable(false);
+            dialog_addGroup.show(Activity_AllGroups.this.getFragmentManager(),"Add a Group");
+        }else {
+
+        }
+    }
 }
 
 

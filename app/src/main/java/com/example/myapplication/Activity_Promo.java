@@ -10,20 +10,17 @@ import android.widget.LinearLayout;
 
 public class Activity_Promo extends AppCompatActivity implements Dialog_AddPromo.Dialog_AddPromoListener {
     private ImageView btn_AddPromo_ActivityPromo;
-    private LinearLayout vb_ContentPromo1_ActivityPromo,vb_ContentPromo2_ActivityPromo;
+    private LinearLayout vb_ContentPromo_ActivityPromo;
     private Data data;
     private Dialog_AddPromo dialogADD;
     private Dialog_WarningDelete warningDelete;
-    private static int switchVerticalContent=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_promo);
-            btn_AddPromo_ActivityPromo = findViewById(R.id.btn_AddPromo_ActivityPromo);
-            vb_ContentPromo1_ActivityPromo = findViewById(R.id.vb_ContentPromo1_ActivityPromo);
-            vb_ContentPromo2_ActivityPromo = findViewById(R.id.vb_ContentPromo2_ActivityPromo);
-            data = DataHolder.getInstance().getMyData();
-
+        setContentView(R.layout.activity_promo);
+        btn_AddPromo_ActivityPromo = findViewById(R.id.btn_AddPromo_ActivityPromo);
+        vb_ContentPromo_ActivityPromo = findViewById(R.id.vb_ContentPromo_ActivityPromo);
+        data = DataHolder.getInstance().getMyData();
         {
             for (Promo p : data.getPromos()) {
                 Content_Promo content_promo = new Content_Promo(this, p, new Content_Promo.EventContentListener() {
@@ -36,32 +33,20 @@ public class Activity_Promo extends AppCompatActivity implements Dialog_AddPromo
                     }
 
                     @Override
-                    public void onDeleting(Promo promo,View content,int index) {
+                    public void onDeleting(Promo promo,View content) {
                         DataHolder.getInstance().setTargetPromo(promo);
                         warningDelete = new Dialog_WarningDelete();
                         warningDelete.setCancelable(false);
                         warningDelete.show(Activity_Promo.this.getFragmentManager(),"Delete a Promo");
-                        if (index==0){
-                            DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo1_ActivityPromo);
-                        }else {
-                            DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo2_ActivityPromo);
-                        }
+                        DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo_ActivityPromo);
                         DataHolder.getInstance().setTargetContent(content);
                         DataHolder.getInstance().setTargetPromo(promo);
                     }
                 });
-                if (switchVerticalContent == 0) {
-                    content_promo.setIndexContent(0);
-                    vb_ContentPromo1_ActivityPromo.addView(content_promo.getContent());
-                    switchVerticalContent = 1;
-                } else if (switchVerticalContent == 1) {
-                    content_promo.setIndexContent(1);
-                    vb_ContentPromo2_ActivityPromo.addView(content_promo.getContent());
-                    switchVerticalContent = 0;
-                }
+                    vb_ContentPromo_ActivityPromo.addView(content_promo.getContent());
+
             }
         }//Fetch Data And View in Contents
-
         btn_AddPromo_ActivityPromo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +57,6 @@ public class Activity_Promo extends AppCompatActivity implements Dialog_AddPromo
                 }//Make Window AddPromo
             }
         });//Event Click To Add Promo
-
     }
 
     @Override
@@ -91,30 +75,18 @@ public class Activity_Promo extends AppCompatActivity implements Dialog_AddPromo
                     intent.putExtra("IndexPromo",index);
                     startActivity(intent);
                 }
-
                 @Override
-                public void onDeleting(Promo content_Promo,View content,int index) {
+                public void onDeleting(Promo content_Promo,View content) {
                     warningDelete = new Dialog_WarningDelete();
                     warningDelete.setCancelable(false);
                     warningDelete.show(Activity_Promo.this.getFragmentManager(),"Delete a Promo");
-                    if (index==0){
-                        DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo1_ActivityPromo);
-                    }else {
-                        DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo2_ActivityPromo);
-                    }
+                    DataHolder.getInstance().setTargetContentLayout(vb_ContentPromo_ActivityPromo);
                     DataHolder.getInstance().setTargetContent(content);
                     DataHolder.getInstance().setTargetPromo(promo);
                 }
             });
-            if (switchVerticalContent == 0) {
-                vb_ContentPromo1_ActivityPromo.addView(content_promo.getContent());
-                content_promo.setIndexContent(0);
-                switchVerticalContent = 1;
-            } else if (switchVerticalContent == 1) {
-                vb_ContentPromo2_ActivityPromo.addView(content_promo.getContent());
-                content_promo.setIndexContent(1);
-                switchVerticalContent = 0;
-            }
+                vb_ContentPromo_ActivityPromo.addView(content_promo.getContent());
+
         }
     }
 

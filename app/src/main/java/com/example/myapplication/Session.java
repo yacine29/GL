@@ -2,20 +2,22 @@ package com.example.myapplication;
 
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Session {
-    enum TypeSession {TD,TP}
     private int num;
     private Date date;
     private Time timeStart ,timeEnd;
-    private TypeSession type;
+    enum TypeGroup {TD,TP}
+    private TypeGroup typeGroup;
 
-    public Session(int num, Date date , Time timeStart , Time timeEnd) {
+    public Session(int num, Date date , Time timeStart , Time timeEnd,TypeGroup typeGroup) {
         this.num = num;
         this.date = date;
         this.timeStart=timeStart;
         this.timeEnd=timeEnd;
+        this.typeGroup=typeGroup;
     }
 
     // Getters et setters
@@ -49,5 +51,9 @@ public class Session {
 
     public void setTimeEnd(Time timeEnd) {
         this.timeEnd = timeEnd;
+    }
+
+    public TypeGroup getTypeGroup() {
+        return typeGroup;
     }
 }

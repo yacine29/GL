@@ -18,16 +18,11 @@ import java.time.Year;
 import java.util.Random;
 
 public class Dialog_AddPromo extends DialogFragment {
-    private TextInputEditText inp_Name_Promo;
+    private TextInputEditText inp_NameClass_Promo;private TextInputEditText inp_Speciality_Promo;private TextInputEditText inp_Level_Promo;
     private Button btn_Cancel_Promo, btn_Add_Promo;
     private View view;
     private Context context;
     private Dialog_AddPromoListener listener;
-    private static String getRandomColorCode() {
-        Random random = new Random();
-        int color = random.nextInt(0xFFFFFF + 1);
-        return String.format("#%06X", color);
-    }
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
@@ -42,7 +37,9 @@ public class Dialog_AddPromo extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_add_promo,container,false);
-        inp_Name_Promo=view.findViewById(R.id.inp_Nom_Promo);
+        inp_NameClass_Promo =view.findViewById(R.id.inp_NameClass_Promo);
+        inp_Speciality_Promo =view.findViewById(R.id.inp_Speciality_Promo);
+        inp_Level_Promo =view.findViewById(R.id.inp_Level_Promo);
         btn_Cancel_Promo =view.findViewById(R.id.btn_Cancel_Warning);
         btn_Add_Promo =view.findViewById(R.id.btn_Delete_Warning);
         btn_Cancel_Promo.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +51,9 @@ public class Dialog_AddPromo extends DialogFragment {
         btn_Add_Promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!inp_Name_Promo.getText().toString().isEmpty()&&inp_Name_Promo.getText().toString().length()>1){
+                if (!inp_Speciality_Promo.getText().toString().isEmpty()&&!inp_NameClass_Promo.getText().toString().isEmpty()&&!inp_Level_Promo.getText().toString().isEmpty()&& inp_Speciality_Promo.getText().toString().length()>1&&inp_NameClass_Promo.getText().toString().length()>1){
                     int currentYear = Year.now().getValue();
-                    Promo promo=new Promo(inp_Name_Promo.getText().toString(),currentYear);
+                    Promo promo=new Promo(inp_NameClass_Promo.getText().toString(),inp_Speciality_Promo.getText().toString(),inp_Level_Promo.getText().toString(),currentYear);
                     listener.onDataReceived_AddPromo(promo);
                     dismiss();
                 }

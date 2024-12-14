@@ -35,6 +35,11 @@ public class Dialog_WarningDelete extends DialogFragment {
         btn_Cancel_Warning =view.findViewById(R.id.btn_Cancel_Warning);
         btn_Delete_Warning =view.findViewById(R.id.btn_Delete_Warning);
         out_NameContent_Warning=view.findViewById(R.id.out_NameContent_Warning);
+            if (context.getClass().equals(Activity_Promo.class)){
+                out_NameContent_Warning.setText("Delete Promo");
+            }else if(context.getClass().equals(Activity_AllGroups.class)){
+                out_NameContent_Warning.setText("Delete Group");
+            }
         btn_Cancel_Warning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -7,11 +7,69 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxStrokeWidth="0.8dp"
+        app:endIconMode="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/out_NameContent_Warning">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inp_NameClass_Promo"
+            style="@style/EditTextStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:gravity="top"
+            android:hint="Name Class"
+            android:inputType="text"
+            android:lines="5"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxStrokeWidth="0.8dp"
+        app:endIconMode="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inp_Speciality_Promo"
+            style="@style/EditTextStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:gravity="top"
+            android:hint="Speciality"
+            android:inputType="text"
+            android:lines="5"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="20dp"
@@ -23,15 +81,15 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_Cancel_Warning"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/out_NameContent_Warning">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inp_Nom_Promo"
+            android:id="@+id/inp_Level_Promo"
             style="@style/EditTextStyle1"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:gravity="top"
-            android:hint="Name"
+            android:hint="Level"
             android:inputType="text"
             android:lines="5"
             android:textSize="18sp" />
